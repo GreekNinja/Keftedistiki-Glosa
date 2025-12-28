@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="el">
+<html lang="el" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keftedistiki Glosa | Official Hub</title>
+    <title>Keftedistiki Glosa | The Meatball Experience</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
@@ -14,49 +13,196 @@
             theme: {
                 extend: {
                     colors: {
-                        meatball: '#D97706', // Orange-ish
-                        sauce: '#B45309',
-                        darkbg: '#111827',
-                        cardbg: '#1F2937'
+                        meatball: '#D95700', // Cooked Meatball Color (Darker Orange)
+                        sauce: '#682200',    // Deep Brown Sauce
+                        grease: '#FF9F43',   // Oily Highlight
+                        darkbg: '#180A05',   // Very Dark Brown Background
+                        cardbg: '#2D1408',   // Dark Brown Card
                     },
                     fontFamily: {
                         sans: ['Comfortaa', 'sans-serif'],
                         mono: ['Roboto Mono', 'monospace'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'wobble': 'wobble 3s ease-in-out infinite',
+                        'drip': 'drip 2s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-20px) rotate(5deg)' },
+                        },
+                        wobble: {
+                            '0%, 100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
+                            '50%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
+                        },
+                        drip: {
+                            '0%': { height: '10px' },
+                            '50%': { height: '15px' },
+                            '100%': { height: '10px' }
+                        }
                     }
                 }
             }
         }
     </script>
     <style>
-        .keftes-spin {
-            animation: spin-slow 10s linear infinite;
+        /* Cursor Keftes */
+        body {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="font-size:24px"><text y="24">🧆</text></svg>'), auto;
+            background-color: #180A05;
+            background-image: radial-gradient(circle at 50% 50%, #2D1408 0%, #180A05 100%);
+            overflow-x: hidden;
         }
-        @keyframes spin-slow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+
+        /* Scrollbar Sauce */
+        ::-webkit-scrollbar {
+            width: 12px;
         }
-        .gradient-text {
-            background: linear-gradient(to right, #fbbf24, #d97706);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        ::-webkit-scrollbar-track {
+            background: #180A05;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D95700;
+            border-radius: 10px;
+            border: 2px solid #180A05;
+        }
+
+        /* 3D Meatball Button */
+        .btn-keftes {
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0px 8px 0px 0px #682200; /* Sauce shadow */
+            transform: translateY(0);
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; /* Organic shape */
+            border: 3px solid #682200;
+            background: radial-gradient(circle at 30% 30%, #FF9F43, #D95700);
+        }
+        .btn-keftes:active {
+            transform: translateY(8px) scale(0.95);
+            box-shadow: 0px 0px 0px 0px #682200;
+        }
+        .btn-keftes:hover {
+            filter: brightness(1.1);
+            transform: translateY(-2px) rotate(1deg);
+        }
+
+        /* Keftes Card (Blob Shape) */
+        .card-keftes {
+            transition: all 0.4s ease;
+            background-color: #2D1408;
+            border: 4px solid #D95700;
+            border-radius: 20px 40px 15px 35px; /* Default irregular */
+            box-shadow: 0 10px 0 0 #682200;
+        }
+        .card-keftes:hover {
+            transform: translateY(-5px) rotate(1deg);
+            border-radius: 35px 15px 40px 20px; /* Shift shape on hover */
+            border-color: #FF9F43;
+            box-shadow: 0 15px 0 0 #682200, 0 0 30px rgba(217, 87, 0, 0.3);
+        }
+
+        /* Sauce Drip Decoration */
+        .sauce-drip {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: #682200;
+            z-index: 100;
+        }
+        .sauce-drip::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 5%;
+            width: 30px;
+            height: 40px;
+            background: #682200;
+            border-radius: 0 0 50% 50%;
+            animation: drip 3s infinite ease-in-out;
+        }
+        .sauce-drip::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 80%;
+            width: 45px;
+            height: 60px;
+            background: #682200;
+            border-radius: 0 0 50% 50%;
+            animation: drip 4s infinite ease-in-out 1s;
+        }
+
+        /* Inputs Input Fields */
+        .input-keftes {
+            border: 3px solid #682200;
+            border-radius: 20px 30px 25px 15px;
+            background: #180A05;
+            box-shadow: inset 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .input-keftes:focus {
+            border-color: #FF9F43;
+            border-radius: 15px 25px 20px 30px;
+            outline: none;
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px) scale(0.9);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Floating Meatballs */
+        .blob-meat {
+            position: absolute;
+            background: radial-gradient(circle at 30% 30%, #D95700, #682200);
+            border-radius: 50%;
+            z-index: -1;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            opacity: 0.6;
         }
     </style>
 </head>
-<body class="bg-darkbg text-gray-200 font-sans leading-relaxed selection:bg-meatball selection:text-white">
+<body class="text-orange-100 font-sans leading-relaxed selection:bg-meatball selection:text-white">
+
+    <!-- Sticky Sauce Top -->
+    <div class="sauce-drip"></div>
+
+    <!-- Background Meatballs -->
+    <div class="blob-meat w-64 h-64 top-10 -left-20 animate-wobble"></div>
+    <div class="blob-meat w-48 h-48 bottom-40 -right-10 animate-float"></div>
+    <div class="blob-meat w-32 h-32 top-1/2 left-1/2 animate-float-delayed opacity-40"></div>
+    <div class="blob-meat w-20 h-20 top-40 right-20 animate-wobble opacity-80" style="animation-delay: 1s;"></div>
 
     <!-- Navbar -->
-    <nav class="bg-gray-900 border-b border-gray-800 sticky top-0 z-50">
+    <nav class="bg-[#2D1408]/90 backdrop-blur-md border-b-4 border-sauce sticky top-0 z-50 shadow-2xl rounded-b-[30px]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center gap-2">
-                    <span class="text-3xl">🍝</span>
-                    <span class="font-bold text-xl tracking-wider text-meatball">Keft<span class="text-white">Hub</span></span>
+            <div class="flex items-center justify-between h-24">
+                <div class="flex items-center gap-3 group cursor-pointer">
+                    <div class="text-5xl animate-bounce drop-shadow-md">🧆</div>
+                    <span class="font-black text-3xl tracking-wider text-meatball group-hover:text-grease transition duration-300" style="text-shadow: 2px 2px 0px #682200;">
+                        Keft<span class="text-white">Hub</span>
+                    </span>
                 </div>
                 <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="#translator" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition">Metafrastis</a>
-                        <a href="#rules" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition">Kanones</a>
-                        <a href="#dictionary" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition">Lexiko</a>
+                    <div class="ml-10 flex items-baseline space-x-6">
+                        <a href="#translator" class="relative group px-4 py-2 text-sm font-black uppercase tracking-widest hover:text-grease transition bg-sauce/20 rounded-full border border-transparent hover:border-meatball">
+                            Metafrastis
+                        </a>
+                        <a href="#rules" class="relative group px-4 py-2 text-sm font-black uppercase tracking-widest hover:text-grease transition bg-sauce/20 rounded-full border border-transparent hover:border-meatball">
+                            Kanones
+                        </a>
+                        <a href="#dictionary" class="relative group px-4 py-2 text-sm font-black uppercase tracking-widest hover:text-grease transition bg-sauce/20 rounded-full border border-transparent hover:border-meatball">
+                            Lexiko
+                        </a>
                     </div>
                 </div>
             </div>
@@ -64,200 +210,186 @@
     </nav>
 
     <!-- Hero Section -->
-    <div class="relative overflow-hidden bg-gray-900 pt-16 pb-12 text-center shadow-xl">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-meatball/20 rounded-full blur-3xl -z-10"></div>
-        <h1 class="text-5xl md:text-7xl font-bold mb-4">
-            <span class="gradient-text">Keftedistiki</span> Glosa
-        </h1>
-        <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-8">
-            I episimi glossa tou fagitou, tis plakas kai tou internet.
+    <div class="relative pt-24 pb-20 text-center z-10">
+        <h1 class="text-6xl md:text-8xl font-black mb-6 tracking-tight reveal active" style="text-shadow: 4px 4px 0px #682200;">
+            <span class="text-transparent bg-clip-text bg-gradient-to-b from-grease to-meatball">Keftedistiki</span>
             <br>
-            <span class="text-meatball text-sm font-mono mt-2 block">Ekdosi 2.1 - Tora me Antistrofi Metafrasi!</span>
+            <span class="text-white text-4xl md:text-6xl block mt-2 transform -rotate-2">Zoumero Edition</span>
+        </h1>
+        <p class="text-xl text-orange-200/80 max-w-2xl mx-auto mb-10 font-bold reveal active font-mono" style="transition-delay: 200ms;">
+            I pio nostimi glossa tou internet.
+            <br>
+            <span class="bg-sauce text-grease text-sm font-bold py-2 px-4 rounded-[20px_10px_20px_10px] mt-4 inline-block border-2 border-meatball transform rotate-2">v4.0 - Me extra saltsa</span>
         </p>
-        <a href="#translator" class="bg-meatball hover:bg-sauce text-white font-bold py-3 px-8 rounded-full transition transform hover:scale-105 shadow-lg shadow-orange-900/50">
-            <i class="fa-solid fa-language mr-2"></i> Ksekina ti Mathisi
-        </a>
+        <div class="reveal active" style="transition-delay: 400ms;">
+            <a href="#translator" class="btn-keftes inline-flex items-center text-white text-xl font-black py-4 px-12">
+                <i class="fa-solid fa-utensils mr-3"></i> VOUTA MESA
+            </a>
+        </div>
     </div>
 
-    <div class="max-w-6xl mx-auto px-4 py-12 space-y-16">
+    <div class="max-w-6xl mx-auto px-4 py-12 space-y-24">
 
-        <!-- Translator Section (Interactive) -->
-        <section id="translator" class="bg-cardbg rounded-2xl p-6 md:p-10 shadow-2xl border border-gray-700">
-            <div class="flex flex-col md:flex-row items-center justify-between mb-6 gap-4">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-robot text-3xl text-meatball"></i>
-                    <h2 class="text-3xl font-bold">Kefto-Metafrastis</h2>
+        <!-- Translator Section -->
+        <section id="translator" class="reveal card-keftes p-8 md:p-12 relative overflow-visible group">
+            <!-- Decorative Sauce Splat -->
+            <div class="absolute -top-6 -right-6 text-6xl transform rotate-12 opacity-80">🥫</div>
+
+            <div class="flex flex-col md:flex-row items-center justify-between mb-8 gap-4 relative z-10">
+                <div class="flex items-center gap-4">
+                    <div class="bg-darkbg p-4 rounded-[40%_60%_70%_30%] border-2 border-meatball shadow-lg">
+                        <i class="fa-solid fa-robot text-4xl text-grease animate-pulse"></i>
+                    </div>
+                    <h2 class="text-4xl font-black text-white drop-shadow-md">Kefto-Metafrastis</h2>
                 </div>
-                <button onclick="toggleMode()" class="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg border border-gray-600 transition flex items-center gap-2 text-sm font-bold">
-                    <i class="fa-solid fa-arrow-right-arrow-left"></i> ANTISTROFI / SWAP
+                <button onclick="toggleMode()" class="btn-keftes bg-gray-700 text-white px-6 py-3 !bg-none !bg-darkbg !border-2 !border-gray-600 flex items-center gap-3 text-sm font-bold uppercase tracking-wider !shadow-[0_5px_0_#333]">
+                    <i class="fa-solid fa-arrow-right-arrow-left"></i> Swap
                 </button>
             </div>
             
-            <div class="grid md:grid-cols-2 gap-6 relative">
+            <div class="grid md:grid-cols-2 gap-8 relative z-10">
                 <!-- Input -->
-                <div class="space-y-2">
-                    <label id="labelInput" class="text-sm text-gray-400 font-mono">GREEK / GREEKLISH</label>
+                <div class="space-y-3 group/input">
+                    <label id="labelInput" class="text-xs text-grease font-mono font-bold tracking-widest uppercase ml-4">Greek Input</label>
                     <textarea id="inputText" 
-                        class="w-full h-40 bg-gray-800 border border-gray-600 rounded-xl p-4 focus:outline-none focus:border-meatball transition resize-none text-lg"
+                        class="input-keftes w-full h-48 p-6 text-xl font-medium text-white placeholder-orange-900/50 resize-none transition-all duration-300"
                         placeholder="Grapse edo..."></textarea>
                 </div>
                 
                 <!-- Output -->
-                <div class="space-y-2 relative">
-                    <label id="labelOutput" class="text-sm text-meatball font-mono font-bold">KEFTEDISTIKI OUTPUT</label>
+                <div class="space-y-3 relative group/output">
+                    <label id="labelOutput" class="text-xs text-meatball font-mono font-bold tracking-widest uppercase ml-4">Keftedistiki Output</label>
                     <textarea id="outputText" readonly
-                        class="w-full h-40 bg-gray-900 border border-gray-700 rounded-xl p-4 text-meatball font-bold text-lg resize-none focus:outline-none"
+                        class="input-keftes w-full h-48 p-6 text-grease font-bold text-xl resize-none !border-meatball bg-black/40"
                         placeholder="To apotelesma tha bgei edo..."></textarea>
                     
-                    <button onclick="copyText()" class="absolute bottom-4 right-4 bg-gray-700 hover:bg-gray-600 text-white p-2 rounded-lg transition" title="Copy">
-                        <i class="fa-regular fa-copy"></i>
-                    </button>
+                    <div class="absolute bottom-6 right-6 flex gap-3">
+                        <button onclick="speakText()" class="btn-keftes !p-3 !bg-none !bg-darkbg !border-gray-600 !shadow-[0_4px_0_#333] hover:!text-grease" title="Speak">
+                            <i class="fa-solid fa-volume-high text-lg"></i>
+                        </button>
+                        <button onclick="copyText()" class="btn-keftes !p-3 !bg-none !bg-darkbg !border-gray-600 !shadow-[0_4px_0_#333] hover:!text-green-400" title="Copy">
+                            <i class="fa-regular fa-copy text-lg"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <button onclick="translateText()" class="w-full mt-6 bg-gradient-to-r from-meatball to-yellow-600 hover:from-sauce hover:to-yellow-700 text-white font-bold py-3 rounded-xl shadow-lg transition transform active:scale-95">
+            <button onclick="translateText()" class="btn-keftes w-full mt-8 text-white text-xl font-black py-4 relative z-10 uppercase tracking-widest hover:scale-[1.02]">
                 METAFRASE TO! 🍝
             </button>
         </section>
 
         <!-- Rules Section -->
         <section id="rules">
-            <div class="flex items-center gap-3 mb-8">
-                <i class="fa-solid fa-scroll text-3xl text-meatball"></i>
-                <h2 class="text-3xl font-bold">Oi Ieroi Kanones</h2>
+            <div class="flex items-center gap-4 mb-10 reveal justify-center">
+                <span class="text-5xl drop-shadow-lg">📜</span>
+                <h2 class="text-4xl font-black text-white" style="text-shadow: 3px 3px 0 #682200;">Oi Ieroi Kanones</h2>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-6">
+            <div class="grid md:grid-cols-3 gap-8">
                 <!-- Rule 1 -->
-                <div class="bg-cardbg p-6 rounded-xl border-l-4 border-meatball hover:bg-gray-800 transition">
-                    <div class="text-4xl mb-4">🏁</div>
-                    <h3 class="text-xl font-bold mb-2">Kataliksi</h3>
-                    <p class="text-gray-400 text-sm">Oles oi lexeis prepei na telionoun se <span class="text-meatball font-bold">-fa</span> i <span class="text-meatball font-bold">-nte</span>. Den yparxei logos, apla akougetai asteio.</p>
+                <div class="card-keftes reveal p-8 relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 text-8xl opacity-10 group-hover:scale-125 transition duration-500">🏁</div>
+                    <div class="text-5xl mb-6 inline-block bg-darkbg p-3 rounded-full border-2 border-meatball">🏁</div>
+                    <h3 class="text-2xl font-bold mb-3 text-grease">Kataliksi</h3>
+                    <p class="text-orange-100/70 font-medium">Ola telionoun se <span class="text-white bg-meatball px-2 rounded-lg transform -rotate-2 inline-block shadow-sm">-fa</span> i <span class="text-white bg-meatball px-2 rounded-lg transform rotate-2 inline-block shadow-sm">-nte</span>.</p>
                 </div>
                 <!-- Rule 2 -->
-                <div class="bg-cardbg p-6 rounded-xl border-l-4 border-blue-500 hover:bg-gray-800 transition">
-                    <div class="text-4xl mb-4">💥</div>
-                    <h3 class="text-xl font-bold mb-2">Emfasi</h3>
-                    <p class="text-gray-400 text-sm">To gramma <b>Φ (F)</b> einai to pio simantiko. An mia lexi den exei F, bale ena F kapou stin mesi. Px: <i>Spiti -> Spifiti</i>.</p>
+                <div class="card-keftes reveal p-8 relative overflow-hidden group" style="transition-delay: 100ms;">
+                    <div class="absolute -right-4 -top-4 text-8xl opacity-10 group-hover:scale-125 transition duration-500">💥</div>
+                    <div class="text-5xl mb-6 inline-block bg-darkbg p-3 rounded-full border-2 border-meatball">💥</div>
+                    <h3 class="text-2xl font-bold mb-3 text-grease">Emfasi (F)</h3>
+                    <p class="text-orange-100/70 font-medium">To <b>Φ (F)</b> einai o vasilias. Vale ena 'F' opou mporeis gia extra guesi. Px: <i>Spi<b>f</b>iti</i>.</p>
                 </div>
                 <!-- Rule 3 -->
-                <div class="bg-cardbg p-6 rounded-xl border-l-4 border-green-500 hover:bg-gray-800 transition">
-                    <div class="text-4xl mb-4">🍔</div>
-                    <h3 class="text-xl font-bold mb-2">Thematologia</h3>
-                    <p class="text-gray-400 text-sm">Otan den xereis ti na peis, anaferou se fagito. O "Keftes" einai i apantisi se ola ta provlimata.</p>
+                <div class="card-keftes reveal p-8 relative overflow-hidden group" style="transition-delay: 200ms;">
+                    <div class="absolute -right-4 -top-4 text-8xl opacity-10 group-hover:scale-125 transition duration-500">🍔</div>
+                    <div class="text-5xl mb-6 inline-block bg-darkbg p-3 rounded-full border-2 border-meatball">🍔</div>
+                    <h3 class="text-2xl font-bold mb-3 text-grease">Thema</h3>
+                    <p class="text-orange-100/70 font-medium">Otan den xereis ti na peis, mila gia <b>Keftedes</b>. Einai panta i sosti apantisi.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Dictionary & Alphabet Split -->
-        <div class="grid lg:grid-cols-2 gap-8">
+        <!-- Dictionary & Alphabet -->
+        <div class="grid lg:grid-cols-2 gap-10">
             
             <!-- Alphabet Table -->
-            <section class="bg-cardbg rounded-2xl overflow-hidden shadow-lg border border-gray-700">
-                <div class="p-6 bg-gray-800 border-b border-gray-700">
-                    <h3 class="text-xl font-bold flex items-center gap-2">
-                        <i class="fa-solid fa-font text-meatball"></i> To Alfavito
+            <section class="reveal card-keftes p-0 overflow-hidden !border-[3px]">
+                <div class="p-6 bg-sauce/30 border-b-2 border-meatball flex justify-between items-center">
+                    <h3 class="text-2xl font-black flex items-center gap-3 text-white">
+                        <i class="fa-solid fa-font text-grease"></i> Alfavito
                     </h3>
                 </div>
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto p-2">
                     <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="text-gray-400 text-sm border-b border-gray-700 bg-gray-900/50">
-                                <th class="p-4">Gramma</th>
-                                <th class="p-4">Onoma</th>
-                                <th class="p-4 text-right">Profora</th>
+                        <tbody class="divide-y divide-meatball/30 font-mono text-sm">
+                            <tr class="hover:bg-meatball/20 transition cursor-pointer">
+                                <td class="p-5 font-black text-grease text-3xl drop-shadow-sm">Α</td>
+                                <td class="p-5 font-bold text-lg text-white">Áfa</td>
+                                <td class="p-5 text-right text-orange-300 italic">"ah"</td>
                             </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-700 font-mono text-sm">
-                            <tr class="hover:bg-gray-800/50 transition">
-                                <td class="p-4 font-bold text-meatball text-lg">Α</td>
-                                <td class="p-4">Áfa</td>
-                                <td class="p-4 text-right text-gray-500">"ah"</td>
+                            <tr class="hover:bg-meatball/20 transition cursor-pointer">
+                                <td class="p-5 font-black text-grease text-3xl drop-shadow-sm">Β</td>
+                                <td class="p-5 font-bold text-lg text-white">Béfa</td>
+                                <td class="p-5 text-right text-orange-300 italic">"v"</td>
                             </tr>
-                            <tr class="hover:bg-gray-800/50 transition">
-                                <td class="p-4 font-bold text-meatball text-lg">Β</td>
-                                <td class="p-4">Béfa</td>
-                                <td class="p-4 text-right text-gray-500">"v" san vroxi</td>
+                            <tr class="hover:bg-meatball/20 transition cursor-pointer">
+                                <td class="p-5 font-black text-grease text-3xl drop-shadow-sm">Κ</td>
+                                <td class="p-5 font-bold text-lg text-white">Kéfa</td>
+                                <td class="p-5 text-right text-orange-300 italic">Agapimeno</td>
                             </tr>
-                            <tr class="hover:bg-gray-800/50 transition">
-                                <td class="p-4 font-bold text-meatball text-lg">Κ</td>
-                                <td class="p-4">Kéfa</td>
-                                <td class="p-4 text-right text-gray-500">To Agapimeno</td>
-                            </tr>
-                             <tr class="hover:bg-gray-800/50 transition">
-                                <td class="p-4 font-bold text-meatball text-lg">Φ</td>
-                                <td class="p-4">Foúfa</td>
-                                <td class="p-4 text-right text-gray-500">The King</td>
-                            </tr>
-                            <tr class="hover:bg-gray-800/50 transition">
-                                <td class="p-4 font-bold text-meatball text-lg">Ω</td>
-                                <td class="p-4">Oméfa</td>
-                                <td class="p-4 text-right text-gray-500">Big O</td>
+                            <tr class="bg-meatball/20 hover:bg-meatball/40 transition cursor-pointer">
+                                <td class="p-5 font-black text-white text-3xl drop-shadow-md">Φ</td>
+                                <td class="p-5 font-bold text-lg text-white">Foúfa</td>
+                                <td class="p-5 text-right text-grease font-black">THE KING</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="p-4 text-center text-xs text-gray-500 bg-gray-900/30">
-                        * Ta ypoloipa grammata akolouthoun tin idia logiki (-fa)
-                    </div>
                 </div>
             </section>
 
             <!-- Vocabulary Cards -->
             <section id="dictionary" class="space-y-6">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-book-open text-3xl text-meatball"></i>
-                    <h2 class="text-3xl font-bold">Lexiko Epiviosis</h2>
+                <div class="flex items-center gap-4 mb-4 reveal">
+                    <i class="fa-solid fa-book-open text-4xl text-grease"></i>
+                    <h2 class="text-3xl font-black text-white" style="text-shadow: 2px 2px 0 #682200;">Lexiko</h2>
                 </div>
 
-                <div class="space-y-3">
-                    <!-- Word Card -->
-                    <div class="flex items-center justify-between bg-cardbg p-4 rounded-lg border border-gray-700 hover:border-meatball transition group">
+                <div class="space-y-4">
+                    <!-- Dynamic Word Cards -->
+                    <div class="reveal card-keftes flex items-center justify-between p-5 !rounded-[20px] hover:!rounded-[10px_30px_10px_30px] cursor-pointer group !bg-darkbg">
                         <div>
-                            <span class="text-xs text-gray-500 uppercase font-mono">Greek</span>
-                            <div class="font-bold">Φίλος / Koliti</div>
+                            <span class="text-[10px] text-orange-400 uppercase font-mono tracking-widest">Greek</span>
+                            <div class="font-bold text-lg text-white">Φίλος / Koliti</div>
                         </div>
-                        <i class="fa-solid fa-arrow-right text-gray-600 group-hover:text-meatball transition"></i>
+                        <i class="fa-solid fa-arrow-right text-sauce group-hover:text-grease group-hover:translate-x-2 transition duration-300"></i>
                         <div class="text-right">
-                            <span class="text-xs text-gray-500 uppercase font-mono">Keftedistika</span>
-                            <div class="font-bold text-meatball text-xl">Mprefá</div>
+                            <span class="text-[10px] text-orange-400 uppercase font-mono tracking-widest">Keftedistika</span>
+                            <div class="font-black text-grease text-2xl">Mprefá</div>
                         </div>
                     </div>
 
-                     <!-- Word Card -->
-                     <div class="flex items-center justify-between bg-cardbg p-4 rounded-lg border border-gray-700 hover:border-meatball transition group">
+                    <div class="reveal card-keftes flex items-center justify-between p-5 !rounded-[30px_10px_30px_10px] hover:!rounded-[20px] cursor-pointer group !bg-darkbg" style="transition-delay: 50ms;">
                         <div>
-                            <span class="text-xs text-gray-500 uppercase font-mono">Greek</span>
-                            <div class="font-bold">Σπίτι</div>
+                            <span class="text-[10px] text-orange-400 uppercase font-mono tracking-widest">Greek</span>
+                            <div class="font-bold text-lg text-white">Σπίτι</div>
                         </div>
-                        <i class="fa-solid fa-arrow-right text-gray-600 group-hover:text-meatball transition"></i>
+                        <i class="fa-solid fa-arrow-right text-sauce group-hover:text-grease group-hover:translate-x-2 transition duration-300"></i>
                         <div class="text-right">
-                            <span class="text-xs text-gray-500 uppercase font-mono">Keftedistika</span>
-                            <div class="font-bold text-meatball text-xl">Lokánte</div>
+                            <span class="text-[10px] text-orange-400 uppercase font-mono tracking-widest">Keftedistika</span>
+                            <div class="font-black text-grease text-2xl">Lokánte</div>
                         </div>
                     </div>
 
-                     <!-- Word Card -->
-                     <div class="flex items-center justify-between bg-cardbg p-4 rounded-lg border border-gray-700 hover:border-meatball transition group">
+                    <div class="reveal card-keftes flex items-center justify-between p-5 !rounded-[15px_35px] hover:!rounded-[35px_15px] cursor-pointer group !bg-darkbg" style="transition-delay: 100ms;">
                         <div>
-                            <span class="text-xs text-gray-500 uppercase font-mono">Greek</span>
-                            <div class="font-bold">Βλάκας / Χαζός</div>
+                            <span class="text-[10px] text-orange-400 uppercase font-mono tracking-widest">Greek</span>
+                            <div class="font-bold text-lg text-white">Βλάκας</div>
                         </div>
-                        <i class="fa-solid fa-arrow-right text-gray-600 group-hover:text-meatball transition"></i>
+                        <i class="fa-solid fa-arrow-right text-sauce group-hover:text-grease group-hover:translate-x-2 transition duration-300"></i>
                         <div class="text-right">
-                            <span class="text-xs text-gray-500 uppercase font-mono">Keftedistika</span>
-                            <div class="font-bold text-meatball text-xl">Keftefára</div>
-                        </div>
-                    </div>
-
-                    <!-- Word Card -->
-                    <div class="flex items-center justify-between bg-cardbg p-4 rounded-lg border border-gray-700 hover:border-meatball transition group">
-                        <div>
-                            <span class="text-xs text-gray-500 uppercase font-mono">Greek</span>
-                            <div class="font-bold">Φαγητό</div>
-                        </div>
-                        <i class="fa-solid fa-arrow-right text-gray-600 group-hover:text-meatball transition"></i>
-                        <div class="text-right">
-                            <span class="text-xs text-gray-500 uppercase font-mono">Keftedistika</span>
-                            <div class="font-bold text-meatball text-xl">Foustéfa</div>
+                            <span class="text-[10px] text-orange-400 uppercase font-mono tracking-widest">Keftedistika</span>
+                            <div class="font-black text-grease text-2xl">Keftefára</div>
                         </div>
                     </div>
                 </div>
@@ -265,30 +397,47 @@
         </div>
 
         <!-- Examples Area -->
-        <section class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 text-center border border-gray-700">
-            <h2 class="text-2xl font-bold mb-6">🗣️ Paradeigmata stin Praxi</h2>
-            <div class="flex flex-wrap justify-center gap-4">
-                <div class="bg-black/40 px-6 py-4 rounded-full text-lg shadow-inner">
-                    "Mprefa mou, antefa pame <span class="text-meatball font-bold">lokante</span> na mastofa <span class="text-meatball font-bold">keftedes</span>!"
+        <section class="reveal card-keftes !p-10 text-center relative overflow-hidden !bg-gradient-to-br !from-sauce !to-darkbg !border-grease">
+            <div class="absolute -bottom-10 -left-10 text-9xl opacity-10 transform rotate-45">🍝</div>
+            <h2 class="text-3xl font-black mb-8 text-white relative z-10">🗣️ Paradeigmata stin Praxi</h2>
+            <div class="flex flex-wrap justify-center gap-6 relative z-10">
+                <div class="bg-black/30 px-8 py-6 rounded-[20px_5px_20px_5px] text-xl shadow-lg border border-meatball/50 hover:border-grease transition transform hover:-translate-y-2 hover:rotate-1">
+                    "Mprefa mou, antefa pame <span class="text-grease font-black">lokante</span>!"
                 </div>
-                <div class="bg-black/40 px-6 py-4 rounded-full text-lg shadow-inner">
-                     "Ti <span class="text-meatball font-bold">keftokante</span> simera re?"
+                <div class="bg-black/30 px-8 py-6 rounded-[5px_20px_5px_20px] text-xl shadow-lg border border-meatball/50 hover:border-grease transition transform hover:-translate-y-2 hover:-rotate-1">
+                     "Ti <span class="text-grease font-black">keftokante</span> simera re?"
                 </div>
             </div>
         </section>
 
     </div>
 
-    <footer class="bg-black py-8 mt-12 text-center border-t border-gray-800">
-        <p class="text-gray-500">
+    <footer class="bg-[#100502] py-12 mt-20 text-center border-t-8 border-sauce relative z-10">
+        <div class="flex justify-center items-center gap-4 mb-4">
+            <span class="text-4xl animate-wobble inline-block">🧆</span>
+            <span class="text-4xl animate-bounce inline-block">🍝</span>
+            <span class="text-4xl animate-wobble inline-block" style="animation-delay: 1s;">🥩</span>
+        </div>
+        <p class="text-orange-400/60 font-mono text-sm">
             © 2024 Keftedistiki Glosa Hub. 
-            <span class="block text-xs mt-2">Created for fun, games & keftedes. 🍝</span>
+            <span class="block text-xs mt-2 text-orange-500/40">Made with 100% real keftedes and love.</span>
         </p>
     </footer>
 
     <!-- JavaScript Logic -->
     <script>
-        // Simple Dictionary
+        // Scroll Reveal Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Logic
         const dictionary = {
             "filos": "mprefa",
             "kolitos": "mprefa",
@@ -303,42 +452,45 @@
             "pame": "pamefa",
             "re": "refa"
         };
-        
-        // Reverse Dictionary for Lookup
         const reverseDictionary = Object.fromEntries(Object.entries(dictionary).map(([k, v]) => [v, k]));
-
-        // Translation Mode State
         let isGreekToKeft = true;
 
         function toggleMode() {
             isGreekToKeft = !isGreekToKeft;
-            
             const labelInput = document.getElementById('labelInput');
             const labelOutput = document.getElementById('labelOutput');
             const input = document.getElementById('inputText');
             const output = document.getElementById('outputText');
 
-            // Swap Values
             const tempVal = input.value;
             input.value = output.value;
             output.value = tempVal;
 
-            // Swap Labels
             if (isGreekToKeft) {
-                labelInput.innerText = "GREEK / GREEKLISH";
+                labelInput.innerText = "GREEK INPUT";
                 labelOutput.innerText = "KEFTEDISTIKI OUTPUT";
             } else {
                 labelInput.innerText = "KEFTEDISTIKI INPUT";
-                labelOutput.innerText = "GREEK OUTPUT (MANTEMPSIA)";
+                labelOutput.innerText = "GREEK OUTPUT (GUESS)";
             }
+        }
+
+        function speakText() {
+            const text = document.getElementById("outputText").value;
+            if (!text.trim()) return;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'el-GR';
+            utterance.rate = 0.9;
+            utterance.pitch = 1.1;
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(utterance);
         }
 
         function translateText() {
             const input = document.getElementById('inputText').value;
             if (!input.trim()) return;
             
-            const words = input.split(/(\s+)/); // Split but keep spaces
-            
+            const words = input.split(/(\s+)/);
             const translatedWords = words.map(word => {
                 const cleanWord = word.toLowerCase().replace(/[.,!?;]/g, '');
                 const punctuation = word.match(/[.,!?;]/g) ? word.match(/[.,!?;]/g)[0] : '';
@@ -346,44 +498,17 @@
                 if (!cleanWord.trim()) return word;
 
                 if (isGreekToKeft) {
-                    // --- GREEK TO KEFTEDISTIKI ---
-                    
-                    // Dictionary Check
-                    if (dictionary[cleanWord]) {
-                        return dictionary[cleanWord] + punctuation;
-                    }
-                    // Logic check
-                    if (cleanWord.length <= 3) {
-                        return cleanWord + "fa" + punctuation;
-                    } else if (cleanWord.length > 6) {
-                        return cleanWord.slice(0, -1) + "nte" + punctuation;
-                    } else {
-                        return cleanWord + "fa" + punctuation;
-                    }
-
+                    if (dictionary[cleanWord]) return dictionary[cleanWord] + punctuation;
+                    if (cleanWord.length <= 3) return cleanWord + "fa" + punctuation;
+                    else if (cleanWord.length > 6) return cleanWord.slice(0, -1) + "nte" + punctuation;
+                    else return cleanWord + "fa" + punctuation;
                 } else {
-                    // --- KEFTEDISTIKI TO GREEK ---
-                    
-                    // Reverse Dictionary Check
-                    if (reverseDictionary[cleanWord]) {
-                        return reverseDictionary[cleanWord] + punctuation;
-                    }
-                    
-                    // Attempt to strip suffixes
-                    if (cleanWord.endsWith('nte')) {
-                         // Removing 'nte' usually leaves the root. 
-                         // Adding a guess vowel 'os' or 'i' is hard, so we just strip.
-                        return cleanWord.slice(0, -3) + punctuation; 
-                    }
-                    if (cleanWord.endsWith('fa')) {
-                         return cleanWord.slice(0, -2) + punctuation; 
-                    }
-                    
-                    // If no rule matches, return original
+                    if (reverseDictionary[cleanWord]) return reverseDictionary[cleanWord] + punctuation;
+                    if (cleanWord.endsWith('nte')) return cleanWord.slice(0, -3) + punctuation;
+                    if (cleanWord.endsWith('fa')) return cleanWord.slice(0, -2) + punctuation;
                     return cleanWord + punctuation;
                 }
             });
-
             document.getElementById('outputText').value = translatedWords.join('');
         }
 
@@ -391,15 +516,11 @@
             const copyText = document.getElementById("outputText");
             copyText.select();
             copyText.setSelectionRange(0, 99999); 
-            document.execCommand("copy"); // Fallback for iframe safety
-            
-            // Visual feedback
+            document.execCommand("copy");
             const btn = document.querySelector('button[title="Copy"]');
             const originalIcon = btn.innerHTML;
             btn.innerHTML = '<i class="fa-solid fa-check"></i>';
-            setTimeout(() => {
-                btn.innerHTML = originalIcon;
-            }, 1500);
+            setTimeout(() => { btn.innerHTML = originalIcon; }, 1500);
         }
     </script>
 </body>
