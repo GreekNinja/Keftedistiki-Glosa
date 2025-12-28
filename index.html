@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keftedistiki Glosa | Official Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        meatball: '#D97706', // Orange-ish
+                        sauce: '#B45309',
+                        darkbg: '#111827',
+                        cardbg: '#1F2937'
+                    },
+                    fontFamily: {
+                        sans: ['Comfortaa', 'sans-serif'],
+                        mono: ['Roboto Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .keftes-spin {
+            animation: spin-slow 10s linear infinite;
+        }
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #fbbf24, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-darkbg text-gray-200 font-sans leading-relaxed selection:bg-meatball selection:text-white">
+
+    <!-- Navbar -->
+    <nav class="bg-gray-900 border-b border-gray-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-2">
+                    <span class="text-3xl">🍝</span>
+                    <span class="font-bold text-xl tracking-wider text-meatball">Keft<span class="text-white">Hub</span></span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#translator" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition">Metafrastis</a>
+                        <a href="#rules" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition">Kanones</a>
+                        <a href="#dictionary" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition">Lexiko</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative overflow-hidden bg-gray-900 pt-16 pb-12 text-center shadow-xl">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-meatball/20 rounded-full blur-3xl -z-10"></div>
+        <h1 class="text-5xl md:text-7xl font-bold mb-4">
+            <span class="gradient-text">Keftedistiki</span> Glosa
+        </h1>
+        <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-8">
+            I episimi glossa tou fagitou, tis plakas kai tou internet.
+            <br>
+            <span class="text-meatball text-sm font-mono mt-2 block">Ekdosi 2.1 - Tora me Antistrofi Metafrasi!</span>
+        </p>
+        <a href="#translator" class="bg-meatball hover:bg-sauce text-white font-bold py-3 px-8 rounded-full transition transform hover:scale-105 shadow-lg shadow-orange-900/50">
+            <i class="fa-solid fa-language mr-2"></i> Ksekina ti Mathisi
+        </a>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 py-12 space-y-16">
+
+        <!-- Translator Section (Interactive) -->
+        <section id="translator" class="bg-cardbg rounded-2xl p-6 md:p-10 shadow-2xl border border-gray-700">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-6 gap-4">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-robot text-3xl text-meatball"></i>
+                    <h2 class="text-3xl font-bold">Kefto-Metafrastis</h2>
+                </div>
+                <button onclick="toggleMode()" class="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg border border-gray-600 transition flex items-center gap-2 text-sm font-bold">
+                    <i class="fa-solid fa-arrow-right-arrow-left"></i> ANTISTROFI / SWAP
+                </button>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6 relative">
+                <!-- Input -->
+                <div class="space-y-2">
+                    <label id="labelInput" class="text-sm text-gray-400 font-mono">GREEK / GREEKLISH</label>
+                    <textarea id="inputText" 
+                        class="w-full h-40 bg-gray-800 border border-gray-600 rounded-xl p-4 focus:outline-none focus:border-meatball transition resize-none text-lg"
+                        placeholder="Grapse edo..."></textarea>
+                </div>
+                
+                <!-- Output -->
+                <div class="space-y-2 relative">
+                    <label id="labelOutput" class="text-sm text-meatball font-mono font-bold">KEFTEDISTIKI OUTPUT</label>
+                    <textarea id="outputText" readonly
+                        class="w-full h-40 bg-gray-900 border border-gray-700 rounded-xl p-4 text-meatball font-bold text-lg resize-none focus:outline-none"
+                        placeholder="To apotelesma tha bgei edo..."></textarea>
+                    
+                    <button onclick="copyText()" class="absolute bottom-4 right-4 bg-gray-700 hover:bg-gray-600 text-white p-2 rounded-lg transition" title="Copy">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+            <button onclick="translateText()" class="w-full mt-6 bg-gradient-to-r from-meatball to-yellow-600 hover:from-sauce hover:to-yellow-700 text-white font-bold py-3 rounded-xl shadow-lg transition transform active:scale-95">
+                METAFRASE TO! 🍝
+            </button>
+        </section>
+
+        <!-- Rules Section -->
+        <section id="rules">
+            <div class="flex items-center gap-3 mb-8">
+                <i class="fa-solid fa-scroll text-3xl text-meatball"></i>
+                <h2 class="text-3xl font-bold">Oi Ieroi Kanones</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Rule 1 -->
+                <div class="bg-cardbg p-6 rounded-xl border-l-4 border-meatball hover:bg-gray-800 transition">
+                    <div class="text-4xl mb-4">🏁</div>
+                    <h3 class="text-xl font-bold mb-2">Kataliksi</h3>
+                    <p class="text-gray-400 text-sm">Oles oi lexeis prepei na telionoun se <span class="text-meatball font-bold">-fa</span> i <span class="text-meatball font-bold">-nte</span>. Den yparxei logos, apla akougetai asteio.</p>
+                </div>
+                <!-- Rule 2 -->
+                <div class="bg-cardbg p-6 rounded-xl border-l-4 border-blue-500 hover:bg-gray-800 transition">
+                    <div class="text-4xl mb-4">💥</div>
+                    <h3 class="text-xl font-bold mb-2">Emfasi</h3>
+                    <p class="text-gray-400 text-sm">To gramma <b>Φ (F)</b> einai to pio simantiko. An mia lexi den exei F, bale ena F kapou stin mesi. Px: <i>Spiti -> Spifiti</i>.</p>
+                </div>
+                <!-- Rule 3 -->
+                <div class="bg-cardbg p-6 rounded-xl border-l-4 border-green-500 hover:bg-gray-800 transition">
+                    <div class="text-4xl mb-4">🍔</div>
+                    <h3 class="text-xl font-bold mb-2">Thematologia</h3>
+                    <p class="text-gray-400 text-sm">Otan den xereis ti na peis, anaferou se fagito. O "Keftes" einai i apantisi se ola ta provlimata.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dictionary & Alphabet Split -->
+        <div class="grid lg:grid-cols-2 gap-8">
+            
+            <!-- Alphabet Table -->
+            <section class="bg-cardbg rounded-2xl overflow-hidden shadow-lg border border-gray-700">
+                <div class="p-6 bg-gray-800 border-b border-gray-700">
+                    <h3 class="text-xl font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-font text-meatball"></i> To Alfavito
+                    </h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="text-gray-400 text-sm border-b border-gray-700 bg-gray-900/50">
+                                <th class="p-4">Gramma</th>
+                                <th class="p-4">Onoma</th>
+                                <th class="p-4 text-right">Profora</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700 font-mono text-sm">
+                            <tr class="hover:bg-gray-800/50 transition">
+                                <td class="p-4 font-bold text-meatball text-lg">Α</td>
+                                <td class="p-4">Áfa</td>
+                                <td class="p-4 text-right text-gray-500">"ah"</td>
+                            </tr>
+                            <tr class="hover:bg-gray-800/50 transition">
+                                <td class="p-4 font-bold text-meatball text-lg">Β</td>
+                                <td class="p-4">Béfa</td>
+                                <td class="p-4 text-right text-gray-500">"v" san vroxi</td>
+                            </tr>
+                            <tr class="hover:bg-gray-800/50 transition">
+                                <td class="p-4 font-bold text-meatball text-lg">Κ</td>
+                                <td class="p-4">Kéfa</td>
+                                <td class="p-4 text-right text-gray-500">To Agapimeno</td>
+                            </tr>
+                             <tr class="hover:bg-gray-800/50 transition">
+                                <td class="p-4 font-bold text-meatball text-lg">Φ</td>
+                                <td class="p-4">Foúfa</td>
+                                <td class="p-4 text-right text-gray-500">The King</td>
+                            </tr>
+                            <tr class="hover:bg-gray-800/50 transition">
+                                <td class="p-4 font-bold text-meatball text-lg">Ω</td>
+                                <td class="p-4">Oméfa</td>
+                                <td class="p-4 text-right text-gray-500">Big O</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="p-4 text-center text-xs text-gray-500 bg-gray-900/30">
+                        * Ta ypoloipa grammata akolouthoun tin idia logiki (-fa)
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vocabulary Cards -->
+            <section id="dictionary" class="space-y-6">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-book-open text-3xl text-meatball"></i>
+                    <h2 class="text-3xl font-bold">Lexiko Epiviosis</h2>
+                </div>
+
+                <div class="space-y-3">
+                    <!-- Word Card -->
+                    <div class="flex items-center justify-between bg-cardbg p-4 rounded-lg border border-gray-700 hover:border-meatball transition group">
+                        <div>
+                            <span class="text-xs text-gray-500 uppercase font-mono">Greek</span>
+                            <div class="font-bold">Φίλος / Koliti</div>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-gray-600 group-hover:text-meatball transition"></i>
+                        <div class="text-right">
+                            <span class="text-xs text-gray-500 uppercase font-mono">Keftedistika</span>
+                            <div class="font-bold text-meatball text-xl">Mprefá</div>
+                        </div>
+                    </div>
+
+                     <!-- Word Card -->
+                     <div class="flex items-center justify-between bg-cardbg p-4 rounded-lg border border-gray-700 hover:border-meatball transition group">
+                        <div>
+                            <span class="text-xs text-gray-500 uppercase font-mono">Greek</span>
+                            <div class="font-bold">Σπίτι</div>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-gray-600 group-hover:text-meatball transition"></i>
+                        <div class="text-right">
+                            <span class="text-xs text-gray-500 uppercase font-mono">Keftedistika</span>
+                            <div class="font-bold text-meatball text-xl">Lokánte</div>
+                        </div>
+                    </div>
+
+                     <!-- Word Card -->
+                     <div class="flex items-center justify-between bg-cardbg p-4 rounded-lg border border-gray-700 hover:border-meatball transition group">
+                        <div>
+                            <span class="text-xs text-gray-500 uppercase font-mono">Greek</span>
+                            <div class="font-bold">Βλάκας / Χαζός</div>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-gray-600 group-hover:text-meatball transition"></i>
+                        <div class="text-right">
+                            <span class="text-xs text-gray-500 uppercase font-mono">Keftedistika</span>
+                            <div class="font-bold text-meatball text-xl">Keftefára</div>
+                        </div>
+                    </div>
+
+                    <!-- Word Card -->
+                    <div class="flex items-center justify-between bg-cardbg p-4 rounded-lg border border-gray-700 hover:border-meatball transition group">
+                        <div>
+                            <span class="text-xs text-gray-500 uppercase font-mono">Greek</span>
+                            <div class="font-bold">Φαγητό</div>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-gray-600 group-hover:text-meatball transition"></i>
+                        <div class="text-right">
+                            <span class="text-xs text-gray-500 uppercase font-mono">Keftedistika</span>
+                            <div class="font-bold text-meatball text-xl">Foustéfa</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Examples Area -->
+        <section class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 text-center border border-gray-700">
+            <h2 class="text-2xl font-bold mb-6">🗣️ Paradeigmata stin Praxi</h2>
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="bg-black/40 px-6 py-4 rounded-full text-lg shadow-inner">
+                    "Mprefa mou, antefa pame <span class="text-meatball font-bold">lokante</span> na mastofa <span class="text-meatball font-bold">keftedes</span>!"
+                </div>
+                <div class="bg-black/40 px-6 py-4 rounded-full text-lg shadow-inner">
+                     "Ti <span class="text-meatball font-bold">keftokante</span> simera re?"
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="bg-black py-8 mt-12 text-center border-t border-gray-800">
+        <p class="text-gray-500">
+            © 2024 Keftedistiki Glosa Hub. 
+            <span class="block text-xs mt-2">Created for fun, games & keftedes. 🍝</span>
+        </p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Simple Dictionary
+        const dictionary = {
+            "filos": "mprefa",
+            "kolitos": "mprefa",
+            "spiti": "lokante",
+            "fagito": "foustefa",
+            "troo": "mastofa",
+            "gelao": "gelofante",
+            "vlakas": "keftefara",
+            "hazos": "keftefara",
+            "keftes": "keftefa",
+            "geia": "geiafa",
+            "pame": "pamefa",
+            "re": "refa"
+        };
+        
+        // Reverse Dictionary for Lookup
+        const reverseDictionary = Object.fromEntries(Object.entries(dictionary).map(([k, v]) => [v, k]));
+
+        // Translation Mode State
+        let isGreekToKeft = true;
+
+        function toggleMode() {
+            isGreekToKeft = !isGreekToKeft;
+            
+            const labelInput = document.getElementById('labelInput');
+            const labelOutput = document.getElementById('labelOutput');
+            const input = document.getElementById('inputText');
+            const output = document.getElementById('outputText');
+
+            // Swap Values
+            const tempVal = input.value;
+            input.value = output.value;
+            output.value = tempVal;
+
+            // Swap Labels
+            if (isGreekToKeft) {
+                labelInput.innerText = "GREEK / GREEKLISH";
+                labelOutput.innerText = "KEFTEDISTIKI OUTPUT";
+            } else {
+                labelInput.innerText = "KEFTEDISTIKI INPUT";
+                labelOutput.innerText = "GREEK OUTPUT (MANTEMPSIA)";
+            }
+        }
+
+        function translateText() {
+            const input = document.getElementById('inputText').value;
+            if (!input.trim()) return;
+            
+            const words = input.split(/(\s+)/); // Split but keep spaces
+            
+            const translatedWords = words.map(word => {
+                const cleanWord = word.toLowerCase().replace(/[.,!?;]/g, '');
+                const punctuation = word.match(/[.,!?;]/g) ? word.match(/[.,!?;]/g)[0] : '';
+                
+                if (!cleanWord.trim()) return word;
+
+                if (isGreekToKeft) {
+                    // --- GREEK TO KEFTEDISTIKI ---
+                    
+                    // Dictionary Check
+                    if (dictionary[cleanWord]) {
+                        return dictionary[cleanWord] + punctuation;
+                    }
+                    // Logic check
+                    if (cleanWord.length <= 3) {
+                        return cleanWord + "fa" + punctuation;
+                    } else if (cleanWord.length > 6) {
+                        return cleanWord.slice(0, -1) + "nte" + punctuation;
+                    } else {
+                        return cleanWord + "fa" + punctuation;
+                    }
+
+                } else {
+                    // --- KEFTEDISTIKI TO GREEK ---
+                    
+                    // Reverse Dictionary Check
+                    if (reverseDictionary[cleanWord]) {
+                        return reverseDictionary[cleanWord] + punctuation;
+                    }
+                    
+                    // Attempt to strip suffixes
+                    if (cleanWord.endsWith('nte')) {
+                         // Removing 'nte' usually leaves the root. 
+                         // Adding a guess vowel 'os' or 'i' is hard, so we just strip.
+                        return cleanWord.slice(0, -3) + punctuation; 
+                    }
+                    if (cleanWord.endsWith('fa')) {
+                         return cleanWord.slice(0, -2) + punctuation; 
+                    }
+                    
+                    // If no rule matches, return original
+                    return cleanWord + punctuation;
+                }
+            });
+
+            document.getElementById('outputText').value = translatedWords.join('');
+        }
+
+        function copyText() {
+            const copyText = document.getElementById("outputText");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); 
+            document.execCommand("copy"); // Fallback for iframe safety
+            
+            // Visual feedback
+            const btn = document.querySelector('button[title="Copy"]');
+            const originalIcon = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+            setTimeout(() => {
+                btn.innerHTML = originalIcon;
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
